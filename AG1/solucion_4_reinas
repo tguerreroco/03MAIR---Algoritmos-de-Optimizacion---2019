@@ -1,0 +1,133 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled8.ipynb",
+      "version": "0.3.2",
+      "provenance": [],
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/tguerreroco/03MAIR---Algoritmos-de-Optimizacion---2019/blob/master/AG1/solucion_4_reinas\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "metadata": {
+        "id": "nGJkNlQ4gAKf",
+        "colab_type": "text"
+      },
+      "cell_type": "markdown",
+      "source": [
+        ""
+      ]
+    },
+    {
+      "metadata": {
+        "id": "BTj8ScvhqjGa",
+        "colab_type": "text"
+      },
+      "cell_type": "markdown",
+      "source": [
+        ""
+      ]
+    },
+    {
+      "metadata": {
+        "id": "DYxrLazLfEny",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 90
+        },
+        "outputId": "9949856c-53af-4bea-c638-4d42786cbab5"
+      },
+      "cell_type": "code",
+      "source": [
+        "# Soluciòn al problema de las 4 reinas  \n",
+        "# Usando el metodo de vuelta atrás \n",
+        "import numpy as np \n",
+        "tablero = [ [0, 0, 0, 0], \n",
+        "            [0, 0, 0, 0], \n",
+        "            [0, 0, 0, 0], \n",
+        "            [0, 0, 0, 0] \n",
+        "          ] \n",
+        "\n",
+        "def imprime_tablero(tablero): \n",
+        "     print(np.matrix(tablero))\n",
+        "\n",
+        "def ubica_reina(tablero, renglon, columna): \n",
+        "  \n",
+        "    # Revisa si hay una reina en la misma fila \n",
+        "    for i in range(4):\n",
+        "        if (i != columna):\n",
+        "           if tablero[renglon][i] == 1: \n",
+        "              return False\n",
+        "  \n",
+        "    # Revisa si hay una reina en la misma columna\n",
+        "    for i in range(4): \n",
+        "        if (i != renglon):\n",
+        "           if tablero[i][columna] == 1: \n",
+        "              return False\n",
+        "    \n",
+        "    # Revisa si hay una reina en la diagonal superior del lado izquierdo \n",
+        "    for i,j in zip(range(renglon,-1,-1), range(columna,-1,-1)): \n",
+        "        if tablero[i][j] == 1: \n",
+        "            return False\n",
+        "  \n",
+        "    # Revisa si hay una reina la diagonal inferior en el lado derecho\n",
+        "    for i,j in zip(range(renglon,4,1), range(columna,-1,-1)): \n",
+        "        if tablero[i][j] == 1: \n",
+        "            return False\n",
+        "  \n",
+        "    return True\n",
+        "   \n",
+        "\n",
+        "def busca_solucion_4_reinas(tablero, columna): \n",
+        "    # columna=4 indica que todas las reinas fueron colocadas \n",
+        "    if columna >= 4: \n",
+        "        return True\n",
+        "    for i in range(4): \n",
+        "      if ubica_reina(tablero, i, columna):  \n",
+        "         tablero[i][columna] = 1\n",
+        "         if busca_solucion_4_reinas(tablero, columna+1) == True: \n",
+        "            return True\n",
+        "         tablero[i][columna] = 0\n",
+        "    #La reina no se pudo colocar\n",
+        "    return False\n",
+        "  \n",
+        "\n",
+        "def resuelve_4_reinas_vuelta_atras(): \n",
+        "    busca_solucion_4_reinas(tablero, 0) \n",
+        "    imprime_tablero(tablero) \n",
+        " \n",
+        "resuelve_4_reinas_vuelta_atras()"
+      ],
+      "execution_count": 37,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "[[0 0 1 0]\n",
+            " [1 0 0 0]\n",
+            " [0 0 0 1]\n",
+            " [0 1 0 0]]\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    }
+  ]
+}
